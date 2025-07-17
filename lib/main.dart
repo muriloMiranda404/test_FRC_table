@@ -25,37 +25,8 @@ import "package:window_manager/window_manager.dart";
 
   @override
   Widget build(BuildContext context){
-      return MaterialApp(
-        home: Scaffold(
-          appBar: AppBar(
-            title: Text("Hyobots table"),
-            backgroundColor: Colors.lightBlue,
-          ),
-          body: Stack(
-            alignment: Alignment.center,
-            children: [
-              DropdownButton(
-                value: modo,
-                items: <String>[
-                    'autonomous',
-                    'teleop',
-                    'disable',
-                    'simulation',
-                    'test'
-                ].map((String value){
-                  return DropdownMenuItem(
-                    value: value,
-                     child: Text(value));
-                }).toList(), 
-                onChanged: (String? newMode){
-                  setState(() {
-                    modo = newMode!;
-                    print("o modo é o $modo");
-                  });
-                })
-            ],
-          ),
-        )
-      );  
+    return MaterialApp(
+
+    );
   }
   }
