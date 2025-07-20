@@ -1,4 +1,4 @@
-import "dart:io" show Platform;
+import "dart:io" show NetworkInterface, Platform, WebSocket;
 
 import "package:flutter/material.dart";
 import "package:window_manager/window_manager.dart";
@@ -9,7 +9,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
     windowManager.ensureInitialized();//garante que tudo esteja pronto antes de iniciar
     if(!kIsWeb && Platform.isWindows){
       await windowManager.ensureInitialized();
-
       WindowOptions options = const WindowOptions(
         size: Size(500, 450),
         backgroundColor: Colors.green,
