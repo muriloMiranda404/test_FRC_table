@@ -1,60 +1,64 @@
-import "dart:io" show NetworkInterface, Platform, WebSocket;
-
 import "package:flutter/material.dart";
-import "package:window_manager/window_manager.dart";
-import 'package:flutter/foundation.dart' show kIsWeb;
 
-//tipo o robotInit ou teleopInit
-  void main() async{
-    windowManager.ensureInitialized();//garante que tudo esteja pronto antes de iniciar
-    if(!kIsWeb && Platform.isWindows){
-      await windowManager.ensureInitialized();
-      WindowOptions options = const WindowOptions(
-        size: Size(500, 450),
-        backgroundColor: Colors.green,
-        minimumSize: Size(500, 450),
-        center: true,
-      );
+void main(){
+  runApp(const MyApp());
+}
 
-      windowManager.waitUntilReadyToShow(options, () async{
-        windowManager.focus();
-        windowManager.maximize();
-        windowManager.show();
-      });
-    }
-      runApp(const MyApp());
-    }
-
-  class MyApp extends StatefulWidget{
-    const MyApp({super.key});
-
-    @override
-    State<MyApp> createState() => MyAppState();
-  }
-
-  class MyAppState extends State<MyApp>{    
+class MyApp extends StatelessWidget{
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Hyobots FRC table',
-      theme: ThemeData(
-        colorScheme: ColorScheme.dark(),
-        useMaterial3: true,
-      ),
-      home: getApp(),
+      home: FRC(),
+      debugShowCheckedModeBanner: true,
     );
   }
+}
 
-   Widget getApp(){
-    if(Platform.isAndroid){
-      Stack(
-        alignment: Alignment.center,
+class FRC extends StatefulWidget{
+  State<FRC> createState() => FRCstate();
+}
+
+class FRCstate extends State<FRC>{
+
+String value = "autonomous";
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      theme: ThemeData.dark(),
+      darkTheme: ThemeData.dark(),
+      home: Scaffold(
+      body: Stack(
         children: [
-          Text("erro")
+          Container(
+            width: 200,
+            height: 200,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: Colors.lightBlue,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: DropdownButton(
+              value: value,
+              items: <String>[
+                'autonomous',
+                'teleop'
+              ].map((String modo){
+                return DropdownMenuItem<String>(
+                  value: modo,
+                  child: Text(modo));
+              }).toList(), 
+              onChanged: (String? newValue){
+                setState(() {
+                  value = newValue!;
+                  print("$value");
+                });
+              }),
+          )
         ],
-      );
-    }
-    return widget;
+      )
+      )
+    );    
   }
-  }
+}
